@@ -16,6 +16,8 @@
     <string name="card_summary_balance">Current balance</string>
     <string name="card_summary_monthlySavedFromTransactions_title">Saved amount:</string>
     <string name="card_summary_monthlyPlans_title">Plans:</string>
+    <string name="card_summary_emergencyFunds_title">Emergency funds:</string>
+    <string name="card_summary_freeFunds_title">Fund money:</string>
     <string name="dashboard_no_plans_created">No plans created</string>
 
     <!-- String related to new plan -->

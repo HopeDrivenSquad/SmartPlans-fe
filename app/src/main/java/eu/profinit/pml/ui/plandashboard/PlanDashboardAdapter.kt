@@ -10,6 +10,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -72,6 +73,16 @@ class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : 
         itemView.monthlyPlusSaveFromTransactionsValue.text = String.format("%d CZK", plan.monthlySavedPerMonth)
         itemView.monthlyMinusPlansValue.text = String.format("%d CZK", plan.monthlyPlans)
         itemView.balanceSlider.value = plan.currentBalance.toFloat()
+        itemView.emergencyFundsValue.text = String.format("%d CZK", plan.emergencyBalance)
+        itemView.freeFundsValue.text = String.format("%d CZK", plan.monthlySavedPerMonth - plan.monthlyPlans)
+
+        if (plan.monthlySavedPerMonth - plan.monthlyPlans < 0) {
+            itemView.freeFunds.setColor(R.color.profinit_red)
+            itemView.freeFundsValue.setColor(R.color.profinit_red)
+        } else {
+            itemView.freeFunds.setColor(android.R.color.holo_green_light)
+            itemView.freeFundsValue.setColor(android.R.color.holo_green_light)
+        }
 
         itemView.balanceSlider.clearOnChangeListeners()
         itemView.balanceSlider.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->  itemView.currentBalanceValue.text = String.format("%s CZK", slider.value.toString()) })
@@ -143,4 +154,8 @@ fun ProgressBar.setTint(@ColorRes colorRes: Int) {
 
 fun AppCompatImageButton.setDrawable(@DrawableRes colorDrawable: Int) {
     this.setImageDrawable(ContextCompat.getDrawable(this.context, colorDrawable))
+}
+
+fun AppCompatTextView.setColor(@ColorRes colorRes: Int) {
+    this.setTextColor(ContextCompat.getColor(context, colorRes))
 }
