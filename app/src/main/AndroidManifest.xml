@@ -29,6 +29,9 @@
 
         <activity android:name=".ui.newplan.NewPlanActivity"
             android:theme="@style/Theme.ProfinitMoneyLearning.App"/>
+
+        <activity android:name=".ui.transactions.TransactionsActivity"
+            android:theme="@style/Theme.ProfinitMoneyLearning.App"/>
     </application>
 
 </manifest>

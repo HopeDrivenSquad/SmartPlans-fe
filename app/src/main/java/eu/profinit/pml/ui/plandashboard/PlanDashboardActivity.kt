@@ -13,6 +13,7 @@ import eu.profinit.pml.data.common.Plan
 import eu.profinit.pml.databinding.ActivityDashboardPlanBinding
 import eu.profinit.pml.ui.detail.PlanDetailActivity
 import eu.profinit.pml.ui.newplan.NewPlanActivity
+import eu.profinit.pml.ui.transactions.TransactionsActivity
 import kotlinx.android.synthetic.main.card_dashboard_overview.*
 
 class PlanDashboardActivity : AppCompatActivity() {
@@ -91,6 +92,12 @@ class PlanDashboardActivity : AppCompatActivity() {
     private fun navigateToDetail(plan: Plan) {
         val intent = Intent(this, PlanDetailActivity::class.java)
         intent.putExtra("PLAN", plan)
+        startActivity(intent)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    private fun navigateToTransactionOptimization() {
+        val intent = Intent(this, TransactionsActivity::class.java)
         startActivity(intent)
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
