@@ -50,6 +50,9 @@ class PlanDashboardActivity : AppCompatActivity() {
 
         planDashboardViewModel.loading.observe(this, {
             binding.swipeRefreshMyPlans.isRefreshing = it
+            if (it) {
+                binding.placeholder.visibility = View.GONE
+            }
         })
 
         binding.addNewPlan.setOnClickListener {
@@ -62,6 +65,10 @@ class PlanDashboardActivity : AppCompatActivity() {
 
         planDashboardViewModel.loading.observe(this, {
             binding.swipeRefreshMyPlans.isRefreshing = it
+        })
+
+        planDashboardViewModel.placeholder.observe(this, {
+            binding.placeholder.visibility = if (it) View.VISIBLE else View.GONE
         })
     }
 

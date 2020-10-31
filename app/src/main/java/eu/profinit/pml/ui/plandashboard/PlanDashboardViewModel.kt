@@ -9,6 +9,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import java.util.*
 
 class PlanDashboardViewModel(private val dashboardRepository: DashboardRepository) : ViewModel() {
     companion object {
@@ -21,6 +22,7 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
 
     val loading = MutableLiveData(false)
     val myResult = MutableLiveData<Collection<Plan>>()
+    val placeholder = MutableLiveData(true)
     var currentBalance = MutableLiveData(DEFAULT_VALUE)
 
     fun loadMyPlans() {
@@ -30,6 +32,12 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
                 UserSession.clientId,
                 currentBalance.value ?: DEFAULT_VALUE
             )
+            if (response?.plans?.isEmpty() != false) {
+                placeholder.postValue(true)
+            } else {
+                placeholder.postValue(false)
+            }
+
             var returnList = arrayListOf<Plan>()
 
             val overview = Plan(id = -100)
@@ -40,16 +48,41 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
             returnList.add(overview)
             returnList.add(Plan()) // SEPARATOR
             returnList.addAll(response?.plans ?: emptyList())
+//
+//            val mockPlan = Plan(1)
+//            mockPlan.dateTo = "20-12-2020"
+//            mockPlan.percentages = 10
+//            mockPlan.amount = 10_000
+//            mockPlan.name = "Vanoce za rohem"
+//            mockPlan.enabled = true
+//            mockPlan.isOk = true
+//            returnList.add(mockPlan)
 
-            val mockPlan = Plan(1)
-            mockPlan.dateTo = "20-12-2020"
-            mockPlan.percentages = 10
-            mockPlan.amount = 10_000
-            mockPlan.name = "Vanoce za rohem"
-            mockPlan.enabled = true
-            mockPlan.isOk = true
+            returnList.sortWith { o1, o2 ->
+                val first = o1?.id ?: -1
+                val second = o2?.id ?: -1
 
-            returnList.add(mockPlan)
+                if (first == -100) {
+                    return@sortWith -1
+                }
+
+                if (second == -100) {
+                    return@sortWith 1
+                }
+
+                val firstEnabled = o1?.enabled ?: false
+                val secondEnabled = o2?.enabled ?: false
+
+                if (!firstEnabled && secondEnabled) {
+                    return@sortWith 1
+                }
+
+                if (!secondEnabled && firstEnabled) {
+                    return@sortWith -1
+                }
+
+                return@sortWith first.compareTo(second)
+            }
 
             loading.postValue(false)
             myResult.postValue(returnList)

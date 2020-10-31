@@ -17,7 +17,7 @@ data class Plan(val id: Int? = -99) : Parcelable {
     @Transient
     var isOk: Boolean = false
     @Transient
-    var enabled: Boolean = false
+    var enabled: Boolean = true
 
     @Transient
     var currentBalance: Int = 0
