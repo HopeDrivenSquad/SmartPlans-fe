@@ -1,0 +1,71 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.ProfinitMoneyLearning.Common" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/profinit_red</item>
+        <item name="colorPrimaryVariant">@color/profinit_red</item>
+        <item name="colorOnPrimary">@color/profinit_red</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/profinit_red</item>
+        <item name="colorSecondaryVariant">@color/profinit_red</item>
+        <item name="colorOnSecondary">@color/white</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/profinit</item>
+    </style>
+
+    <style name="Theme.ProfinitMoneyLearning.TitleOnBackground" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- LOGIN -->
+    <style name="Theme.ProfinitMoneyLearning.Login" parent="Theme.ProfinitMoneyLearning.Common">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:colorAccent">@color/white</item>
+
+        <item name="editTextStyle">@style/LoginEditTextTheme</item>
+        <item name="buttonStyle">@style/LoginButtonTheme</item>
+        <item name="progressBarStyle">@style/LoginProgressBarTheme</item>
+    </style>
+
+    <style name="LoginEditTextTheme" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
+
+        <item name="android:textCursorDrawable">@null</item>
+
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+    <style name="LoginButtonTheme" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/sc_button</item>
+        <item name="android:textColor">@drawable/sc_textcolor</item>
+    </style>
+
+    <style name="LoginProgressBarTheme" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:indeterminateTint">@color/white</item>
+    </style>
+
+    <!-- REST OF APP -->
+    <style name="Theme.ProfinitMoneyLearning.App" parent="Theme.ProfinitMoneyLearning.Common">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:colorAccent">@color/black</item>
+    </style>
+
+    <style name="MyTooltip" parent="Widget.MaterialComponents.Tooltip">
+        <!-- background color of the Tooltip -->
+        <item name="backgroundTint">@color/profinit_red</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.Slider" parent="">
+        <!-- color used by the text in the Tooltip -->
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+</resources>
