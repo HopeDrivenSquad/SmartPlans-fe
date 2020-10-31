@@ -1,5 +1,6 @@
 package eu.profinit.pml.network
 
+import eu.profinit.pml.data.common.EnableDisable
 import eu.profinit.pml.data.common.Plan
 import eu.profinit.pml.data.common.PlanModel
 import eu.profinit.pml.data.common.Transaction
@@ -25,14 +26,16 @@ abstract interface ApiService {
         @Path("id") id: Int
     )
 
-    @POST("plans")
+    @PUT("plans/{id}")
     suspend fun enablePlan(
-        @Path("id") id: Int
+        @Path("id") id: Int,
+        @Body body: EnableDisable = EnableDisable(true)
     )
 
-    @POST("plans/{id}")
+    @PUT("plans/{id}")
     suspend fun disablePlan(
-        @Path("id") id: Int
+        @Path("id") id: Int,
+        @Body body: EnableDisable = EnableDisable(false)
     )
 
     @GET("transactions")

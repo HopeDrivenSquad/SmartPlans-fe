@@ -3,6 +3,7 @@ package eu.profinit.pml.ui.plandashboard
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -67,6 +68,16 @@ class PlanDashboardActivity : AppCompatActivity() {
     private fun processPlan(plan: Plan) {
         if (plan.id == -100) {
             planDashboardViewModel.currentBalance.postValue(plan.currentBalance)
+        } else {
+            plan.id?.let {
+                if (!plan.enabled) {
+                    planDashboardViewModel.enablePlan(it)
+                } else {
+                    planDashboardViewModel.disablePlan(it)
+                }
+            } ?: run {
+                Toast.makeText(this, "Plan has no ID", Toast.LENGTH_LONG)
+            }
         }
     }
 

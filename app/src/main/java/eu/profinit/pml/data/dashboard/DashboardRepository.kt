@@ -19,4 +19,28 @@ open class DashboardRepository {
         }
         return null
     }
+
+    suspend fun enablePlan(planId: Int): Boolean {
+        try {
+            client.enablePlan(planId)
+            return true
+        } catch (ex: Exception) {
+            when (ex) {
+                is HttpException -> return false
+            }
+        }
+        return false
+    }
+
+    suspend fun disablePlan(planId: Int): Boolean {
+        try {
+            client.disablePlan(planId)
+            return true
+        } catch (ex: Exception) {
+            when (ex) {
+                is HttpException -> return false
+            }
+        }
+        return false
+    }
 }

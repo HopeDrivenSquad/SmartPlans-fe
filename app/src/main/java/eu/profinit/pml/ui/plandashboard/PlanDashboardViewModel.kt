@@ -24,7 +24,7 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
     var currentBalance = MutableLiveData(DEFAULT_VALUE)
 
     fun loadMyPlans() {
-        loading.value = true
+        loading.postValue(true)
         uiScope.launch(coroutineContext) {
             val response = dashboardRepository.getPlans(
                 UserSession.clientId,
@@ -43,7 +43,7 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
 
             val mockPlan = Plan(1)
             mockPlan.dateTo = "20-12-2020"
-            mockPlan.percentages = 33
+            mockPlan.percentages = 10
             mockPlan.amount = 10_000
             mockPlan.name = "Vanoce za rohem"
             mockPlan.enabled = true
@@ -56,9 +56,27 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
         }
     }
 
-    fun enablePlan() {
+    fun enablePlan(id: Int) {
+        loading.postValue(true)
+        uiScope.launch(coroutineContext) {
+            val success = dashboardRepository.enablePlan(id)
+            if (success) {
+                loadMyPlans()
+            } else {
+                loading.postValue(false)
+            }
+        }
     }
 
-    fun disablePlan() {
+    fun disablePlan(id: Int) {
+        loading.postValue(true)
+        uiScope.launch(coroutineContext) {
+            val success = dashboardRepository.disablePlan(id)
+            if (success) {
+                loadMyPlans()
+            } else {
+                loading.postValue(false)
+            }
+        }
     }
 }

@@ -1,11 +1,14 @@
 package eu.profinit.pml.ui.plandashboard
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
@@ -99,11 +102,11 @@ class PlanDashboardItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
 
     @SuppressLint("SetTextI18n")
     override fun bind(plan: Plan, clickListener: (Plan) -> Unit) {
-        itemView.setOnClickListener { clickListener(plan) }
 
         itemView.planTitle.text = plan.name
-        itemView.planValue.text = String.format("Cil: %s CZK", plan.amount.toString())
-        itemView.planExpiration.text = String.format("Expirace: %s", plan.dateTo.toString())
+        itemView.planValue.text = String.format("Target: %s CZK", plan.amount.toString())
+        itemView.planActual.text = String.format("Actual: %s CZK", ((plan.amount * plan.percentages) / 100).toString())
+        itemView.planExpiration.text = String.format("Expiration: %s", plan.dateTo.toString())
 
         val color = when (plan.percentages) {
             in 0..50 -> R.color.profinit_red
@@ -114,6 +117,19 @@ class PlanDashboardItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.indicator.setTint(if (plan.isOk) android.R.color.holo_green_light else R.color.profinit_red)
         itemView.planProgress.progress = plan.percentages
         itemView.planProgress.setTint(color)
+
+
+        itemView.enableDisablePlan.setOnClickListener {
+            clickListener(plan)
+        }
+
+        if (plan.enabled) {
+            itemView.enableDisablePlan.setDrawable(R.drawable.ic_turned_on)
+        } else {
+            itemView.enableDisablePlan.setDrawable(R.drawable.ic_turned_off)
+            itemView.indicator.setTint(R.color.disabled)
+            itemView.planProgress.setTint(R.color.disabled)
+        }
     }
 }
 
@@ -123,4 +139,8 @@ fun AppCompatImageView.setTint(@ColorRes colorRes: Int) {
 
 fun ProgressBar.setTint(@ColorRes colorRes: Int) {
     this.progressTintList = ColorStateList.valueOf(ContextCompat.getColor(this.context, colorRes))
+}
+
+fun AppCompatImageButton.setDrawable(@DrawableRes colorDrawable: Int) {
+    this.setImageDrawable(ContextCompat.getDrawable(this.context, colorDrawable))
 }

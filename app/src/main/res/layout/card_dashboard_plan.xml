@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardContainer"
 
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -47,6 +48,21 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/indicator"
+            app:layout_constraintEnd_toStartOf="@id/enableDisablePlan"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/enableDisablePlan"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_turned_on"
+            android:background="@null"
+
+            android:layout_marginStart="8dp"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/planTitle"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -68,7 +84,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/planValue"
 
-            tools:text="Expirace: 20-12-2020"/>
+            tools:text="Expiration: 20-12-2020"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/planActual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/planTitle"
+            app:layout_constraintTop_toBottomOf="@id/planValue"
+
+            tools:text="Hodnota planu: 0 Kč"/>
 
         <ProgressBar
             android:id="@+id/planProgress"
@@ -79,9 +106,9 @@
             android:layout_marginTop="8dp"
             android:visibility="visible"
             android:progress="10"
-            app:layout_constraintStart_toStartOf="@id/planValue"
+            app:layout_constraintStart_toStartOf="@id/planActual"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planValue"
+            app:layout_constraintTop_toBottomOf="@id/planActual"
 
             tools:progressTint="@android:color/holo_red_light"
             />
