@@ -21,6 +21,6 @@ class LoginDataSource {
     }
 
     fun logout() {
-        UserSession.userName = null
+        UserSession.clientId = null
     }
 }

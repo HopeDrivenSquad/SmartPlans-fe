@@ -54,12 +54,19 @@ class PlanDashboardActivity : AppCompatActivity() {
         binding.addNewPlan.setOnClickListener {
             navigateToNewPlan()
         }
+
+        planDashboardViewModel.currentBalance.observe(this, {
+            planDashboardViewModel.loadMyPlans()
+        })
+
+        planDashboardViewModel.loading.observe(this, {
+            binding.swipeRefreshMyPlans.isRefreshing = it
+        })
     }
 
     private fun processPlan(plan: Plan) {
         if (plan.id == -100) {
             planDashboardViewModel.currentBalance.postValue(plan.currentBalance)
-            planDashboardViewModel.loadMyPlans()
         }
     }
 

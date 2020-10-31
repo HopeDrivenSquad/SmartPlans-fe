@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -14,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.slider.Slider
 import eu.profinit.pml.R
 import eu.profinit.pml.data.common.Plan
-import kotlinx.android.synthetic.main.activity_login.view.*
 import kotlinx.android.synthetic.main.card_dashboard_overview.view.*
 import kotlinx.android.synthetic.main.card_dashboard_plan.view.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -40,7 +37,7 @@ class PlanDashboardAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return list.get(position).id
+        return list.get(position).id ?: -99
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommonHolder {
@@ -69,12 +66,14 @@ class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : 
     @SuppressLint("SetTextI18n")
     override fun bind(plan: Plan, clickListener: (Plan) -> Unit) {
         itemView.currentBalanceValue.text = String.format("%d CZK", plan.currentBalance)
-        itemView.monthlyPlusSaveFromTransactionsValue.text = String.format("%d CZK", plan.monthlyPlusOptimisation)
-        itemView.monthlyMinusPlansValue.text = String.format("%d CZK", plan.monthlyMinusPlans)
+        itemView.monthlyPlusSaveFromTransactionsValue.text = String.format("%d CZK", plan.monthlySavedPerMonth)
+        itemView.monthlyMinusPlansValue.text = String.format("%d CZK", plan.monthlyPlans)
         itemView.balanceSlider.value = plan.currentBalance.toFloat()
 
+        itemView.balanceSlider.clearOnChangeListeners()
         itemView.balanceSlider.addOnChangeListener(Slider.OnChangeListener { slider, value, fromUser ->  itemView.currentBalanceValue.text = String.format("%s CZK", slider.value.toString()) })
 
+        itemView.balanceSlider.clearOnSliderTouchListeners()
         itemView.balanceSlider.addOnSliderTouchListener(object: Slider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: Slider) {
             }
@@ -103,15 +102,16 @@ class PlanDashboardItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         itemView.setOnClickListener { clickListener(plan) }
 
         itemView.planTitle.text = plan.name
-        itemView.planValue.text = plan.amount.toString()
+        itemView.planValue.text = String.format("Cil: %s CZK", plan.amount.toString())
+        itemView.planExpiration.text = String.format("Expirace: %s", plan.dateTo.toString())
 
         val color = when (plan.percentages) {
-            in 0..50 -> android.R.color.holo_red_light
+            in 0..50 -> R.color.profinit_red
             in 50..75 -> android.R.color.holo_orange_light
             in 75..100 -> android.R.color.holo_green_light
             else -> android.R.color.holo_green_light
         }
-        itemView.indicator.setTint(if (plan.isOk) android.R.color.holo_green_light else android.R.color.holo_red_light)
+        itemView.indicator.setTint(if (plan.isOk) android.R.color.holo_green_light else R.color.profinit_red)
         itemView.planProgress.progress = plan.percentages
         itemView.planProgress.setTint(color)
     }

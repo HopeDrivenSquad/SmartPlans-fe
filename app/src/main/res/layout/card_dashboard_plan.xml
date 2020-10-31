@@ -60,6 +60,16 @@
 
             tools:text="Hodnota planu: 0 Kč"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/planExpiration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/planValue"
+
+            tools:text="Expirace: 20-12-2020"/>
+
         <ProgressBar
             android:id="@+id/planProgress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"

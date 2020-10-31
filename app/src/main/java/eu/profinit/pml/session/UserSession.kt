@@ -1,9 +1,9 @@
 package eu.profinit.pml.session
 
 object  UserSession {
-    var userName: String? = null
+    var clientId: String? = null
 
-    fun start(userName: String) {
-        this.userName = userName
+    fun start(clientId: String) {
+        this.clientId = clientId
     }
 }

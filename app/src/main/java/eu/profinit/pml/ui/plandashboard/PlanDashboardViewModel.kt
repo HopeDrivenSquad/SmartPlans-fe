@@ -27,17 +27,30 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
         loading.value = true
         uiScope.launch(coroutineContext) {
             val response = dashboardRepository.getPlans(
-                UserSession.userName,
+                UserSession.clientId,
                 currentBalance.value ?: DEFAULT_VALUE
             )
-            var returnList = ArrayList(response?.plans ?: emptyList())
+            var returnList = arrayListOf<Plan>()
 
             val overview = Plan(id = -100)
             overview.currentBalance = currentBalance.value ?: DEFAULT_VALUE
-            overview.monthlyPlusOptimisation = response?.summary?.savedAmountPerMonth ?: 0
-            overview.monthlyMinusPlans = response?.summary?.planAmountPerMonth ?: 0
+            overview.monthlySavedPerMonth = response?.summary?.savedAmountPerMonth ?: 0
+            overview.monthlyPlans = response?.summary?.planAmountPerMonth ?: 0
+
             returnList.add(overview)
-            returnList.add(Plan())
+            returnList.add(Plan()) // SEPARATOR
+            returnList.addAll(response?.plans ?: emptyList())
+
+            val mockPlan = Plan(1)
+            mockPlan.dateTo = "20-12-2020"
+            mockPlan.percentages = 33
+            mockPlan.amount = 10_000
+            mockPlan.name = "Vanoce za rohem"
+            mockPlan.enabled = true
+            mockPlan.isOk = true
+
+            returnList.add(mockPlan)
+
             loading.postValue(false)
             myResult.postValue(returnList)
         }

@@ -14,6 +14,14 @@
     <string name="plan_dashboard">Plan Dashboard</string>
     <string name="card_summary_title">Overview</string>
     <string name="card_summary_balance">Current balance</string>
-    <string name="card_summary_monthlyPlusSaveFromTransactions_title">Balance + optimization:</string>
-    <string name="card_summary_monthlyMinusPlans_title">Balance - plans:</string>
+    <string name="card_summary_monthlySavedFromTransactions_title">Saved amount:</string>
+    <string name="card_summary_monthlyPlans_title">Plans:</string>
+
+
+    <!-- String related to new plan -->
+    <string name="new_plan">New plan</string>
+    <string name="new_plan_create_btn_title">Create</string>
+    <string name="new_plan_expiration_date_label">Plan expiration date:</string>
+    <string name="new_plan_amount_label">Plan amount:</string>
+    <string name="new_plan_name_label">Plan name:</string>
 </resources>

@@ -3,6 +3,7 @@ package eu.profinit.pml.network
 import eu.profinit.pml.data.common.Plan
 import eu.profinit.pml.data.common.PlanModel
 import eu.profinit.pml.data.common.Transaction
+import retrofit2.Response
 import retrofit2.http.*
 
 abstract interface ApiService {
@@ -11,11 +12,12 @@ abstract interface ApiService {
     suspend fun getPlans(
         @Query("clientId") clientId: String?,
         @Query("currentBalance") balance: Int?
-    ): PlanModel
+    ): PlanModel?
 
     @POST("plans")
     suspend fun addNewPlan(
-        @Body plan: Plan
+        @Query("clientId") clientId: String?,
+        @Body plan: Plan?
     )
 
     @DELETE("plans/{id}")
