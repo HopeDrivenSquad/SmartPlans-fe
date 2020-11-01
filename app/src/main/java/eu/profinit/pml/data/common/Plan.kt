@@ -19,14 +19,14 @@ data class Plan(val id: Int? = -99) : Parcelable {
     @Transient
     var currentBalance: Int = 0
     @Transient
-    var monthlySavedPerMonth: Int = 0
+    var monthlySavedPerMonth: Float = 0f
     @Transient
-    var monthlyPlans: Int = 0
+    var monthlyPlans: Float = 0f
     @Transient
-    var emergencyBalance: Int = 0
+    var emergencyBalance: Float = 0f
 }
 
 @Parcelize
 data class PlanModel(val summary: Summary, val plans: @RawValue Collection<Plan>): Parcelable
 @Parcelize
-data class Summary(val savedAmountPerMonth: Int?, val planAmountPerMonth: Int?, val totalAmountPerMonth: Int?, val emergencyBalance: Int?): Parcelable
+data class Summary(val amountSavedPerMonth: Float?, val amountPlanPerMonth: Float?, val amountTotalPerMonth: Float?, val emergencyBalance: Float?): Parcelable

@@ -42,9 +42,9 @@ class PlanDashboardViewModel(private val dashboardRepository: DashboardRepositor
 
             val overview = Plan(id = -100)
             overview.currentBalance = currentBalance.value ?: DEFAULT_VALUE
-            overview.monthlySavedPerMonth = response?.summary?.savedAmountPerMonth ?: 0
-            overview.monthlyPlans = response?.summary?.planAmountPerMonth ?: 0
-            overview.emergencyBalance = response?.summary?.emergencyBalance ?: 0
+            overview.monthlySavedPerMonth = response?.summary?.amountSavedPerMonth ?: 0f
+            overview.monthlyPlans = response?.summary?.amountPlanPerMonth ?: 0f
+            overview.emergencyBalance = response?.summary?.emergencyBalance ?: 0f
 
             returnList.add(overview)
             returnList.add(Plan()) // SEPARATOR

@@ -20,7 +20,9 @@ import eu.profinit.pml.R
 import eu.profinit.pml.data.common.Plan
 import kotlinx.android.synthetic.main.card_dashboard_overview.view.*
 import kotlinx.android.synthetic.main.card_dashboard_plan.view.*
+import java.text.DecimalFormat
 import java.util.*
+import kotlin.math.min
 
 
 class PlanDashboardAdapter(
@@ -70,12 +72,14 @@ class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : 
 
     @SuppressLint("SetTextI18n")
     override fun bind(plan: Plan, clickListener: (Plan, Int) -> Unit) {
-        itemView.currentBalanceValue.text = String.format("%d CZK", plan.currentBalance)
-        itemView.monthlyPlusSaveFromTransactionsValue.text = String.format("%d CZK", plan.monthlySavedPerMonth)
-        itemView.monthlyMinusPlansValue.text = String.format("%d CZK", plan.monthlyPlans)
+
+
+        itemView.currentBalanceValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(plan.currentBalance))
+        itemView.monthlyPlusSaveFromTransactionsValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(plan.monthlySavedPerMonth))
+        itemView.monthlyMinusPlansValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(plan.monthlyPlans))
         itemView.balanceSlider.value = plan.currentBalance.toFloat()
-        itemView.emergencyFundsValue.text = String.format("%d CZK", plan.emergencyBalance)
-        itemView.freeFundsValue.text = String.format("%d CZK", plan.monthlySavedPerMonth - plan.monthlyPlans)
+        itemView.emergencyFundsValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(plan.emergencyBalance))
+        itemView.freeFundsValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(plan.monthlySavedPerMonth - plan.monthlyPlans))
 
         if (plan.monthlySavedPerMonth - plan.monthlyPlans < 0) {
             itemView.freeFunds.setColor(R.color.profinit_red)
@@ -125,8 +129,8 @@ class PlanDashboardItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
     override fun bind(plan: Plan, clickListener: (Plan, Int) -> Unit) {
 
         itemView.planTitle.text = plan.name
-        itemView.planValue.text = String.format("Target: %s CZK", plan.amount.toString())
-        itemView.planActual.text = String.format("Actual: %s CZK", ((plan.amount * (plan.percentages ?:0)) / 100).toString())
+        itemView.planValue.text = String.format("Target: %s CZK", DecimalFormat("#,###").format(plan.amount))
+        itemView.planActual.text = String.format("Actual: %s CZK", DecimalFormat("#,###").format(((plan.amount * (min(plan.percentages ?:0, 100))) / 100)))
         itemView.planExpiration.text = String.format("Expiration: %s", plan.dateTo)
 
         val color = when (plan.percentages) {

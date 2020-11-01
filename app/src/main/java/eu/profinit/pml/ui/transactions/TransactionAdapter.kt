@@ -23,6 +23,7 @@ import eu.profinit.pml.data.common.TransactionCategory
 import kotlinx.android.synthetic.main.card_category.view.*
 import kotlinx.android.synthetic.main.card_dashboard_overview.view.*
 import kotlinx.android.synthetic.main.card_dashboard_plan.view.*
+import java.text.DecimalFormat
 import java.util.*
 
 
@@ -67,7 +68,7 @@ class TransactionItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : C
     override fun bind(transaction: TransactionCategory, clickListener: (TransactionCategory, Int) -> Unit) {
 
         itemView.categoryTitle.text = transaction.name
-        itemView.categorySavingsValue.text = String.format("%d CZK" ,transaction.amountSavedPerMonth)
+        itemView.categorySavingsValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(transaction.amountSavedPerMonth))
 
         itemView.expander.setOnClickListener {
             itemView.transactions.adapter = SubTransactionAdapter()

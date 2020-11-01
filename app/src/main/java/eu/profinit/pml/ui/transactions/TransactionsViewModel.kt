@@ -31,15 +31,9 @@ class TransactionsViewModel(private val transactionsRepoository: TransactionsRep
             summary.postValue(transactionModel?.summary)
 
             val _categories = arrayListOf<TransactionCategory>()
-
-            val trns = arrayListOf<Transaction>()
-            trns.add(Transaction(1, "2020-12-12", -100, "Hello"))
-            trns.add(Transaction(2, "2020-12-12", -100, "Hello"))
-            trns.add(Transaction(3, "2020-12-12", -100, "Hello"))
-            trns.add(Transaction(4, "2020-12-12", -100, "Hello"))
-
-            _categories.add(TransactionCategory("TEST", 1000, trns))
             _categories.addAll(transactionModel?.categories ?: emptyList())
+
+            _categories.addAll(_categories)
             categories.postValue(_categories)
 
             loading.postValue(false)

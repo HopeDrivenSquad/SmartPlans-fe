@@ -14,6 +14,8 @@ import eu.profinit.pml.databinding.ActivityNewPlanBinding
 import eu.profinit.pml.databinding.ActivityTransactionsBinding
 import eu.profinit.pml.ui.login.afterTextChanged
 import eu.profinit.pml.ui.plandashboard.PlanDashboardAdapter
+import java.text.DecimalFormat
+import kotlin.math.abs
 
 class TransactionsActivity : AppCompatActivity() {
     private lateinit var transactionsViewModel: TransactionsViewModel
@@ -47,7 +49,7 @@ class TransactionsActivity : AppCompatActivity() {
         })
 
         transactionsViewModel.summary.observe(this, {
-            binding.allSavedValue.text = String.format("%d CZK", it.amountSavedPerMonth)
+            binding.allSavedValue.text = String.format("%s CZK" , DecimalFormat("#,###").format(it.amountSavedPerMonth))
         })
 
         binding.backButton.setOnClickListener {

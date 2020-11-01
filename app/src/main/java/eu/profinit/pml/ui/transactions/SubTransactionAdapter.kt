@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.card_category.view.*
 import kotlinx.android.synthetic.main.card_dashboard_overview.view.*
 import kotlinx.android.synthetic.main.card_dashboard_plan.view.*
 import kotlinx.android.synthetic.main.card_transaction.view.*
+import java.text.DecimalFormat
 import java.util.*
 
 
@@ -65,8 +66,8 @@ class SubTransactionItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) 
     @SuppressLint("SetTextI18n")
     override fun bind(transaction: Transaction) {
 
-        itemView.transactionTitle.text = transaction.merchantName
-        itemView.transactionAmount.text = String.format("%d CZK" ,transaction.amount)
-        itemView.transactionDate.text = transaction.date
+        itemView.transactionTitle.text = transaction.merchantCategory
+        itemView.transactionAmount.text = String.format("%s CZK" ,DecimalFormat("#,###").format(transaction.amount))
+        itemView.transactionDate.text = transaction.transactionDate
     }
 }
