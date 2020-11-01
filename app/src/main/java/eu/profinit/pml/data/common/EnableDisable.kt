@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class EnableDisable(val enable: Boolean): Parcelable
+data class EnableDisable(val enabled: Boolean): Parcelable

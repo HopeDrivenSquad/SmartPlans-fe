@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardContainer"
+
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+
+    tools:context=".ui.plandashboard.PlanDashboardActivity"
+    tools:theme="@style/Theme.ProfinitMoneyLearning.App">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/transactionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+
+            android:textStyle="bold"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            tools:text="Alcohol"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/transactionAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="@id/transactionTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:textColor="@color/profinit_red"
+
+            tools:text="-100CZK"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/transactionDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="12sp"
+            android:textColor="@color/disabled"
+
+            app:layout_constraintTop_toBottomOf="@id/transactionAmount"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            tools:text="2020-12-12"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.cardview.widget.CardView>

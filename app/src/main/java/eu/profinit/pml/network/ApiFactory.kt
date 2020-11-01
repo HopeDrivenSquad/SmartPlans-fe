@@ -35,7 +35,7 @@ object ApiFactory {
 
     fun retrofitApi(): Retrofit = Retrofit.Builder()
         .client(apiClient)
-        .baseUrl("https://www.google.com")
+        .baseUrl("https://smartplans.azurewebsites.net/api/")
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
 

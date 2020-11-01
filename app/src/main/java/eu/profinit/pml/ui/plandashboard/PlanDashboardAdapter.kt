@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.annotation.ColorRes
@@ -23,7 +24,7 @@ import java.util.*
 
 
 class PlanDashboardAdapter(
-    private val clickListener: (Plan) -> Unit
+    private val clickListener: (Plan, Int) -> Unit
 ) : RecyclerView.Adapter<CommonHolder>() {
 
     private var list: ArrayList<Plan> = arrayListOf()
@@ -62,13 +63,13 @@ class PlanDashboardAdapter(
 
 abstract class CommonHolder(inflater: LayoutInflater, parent: ViewGroup, layoutRes: Int) :
     RecyclerView.ViewHolder(inflater.inflate(layoutRes, parent, false)) {
-    abstract fun bind(plan: Plan, clickListener: (Plan) -> Unit)
+    abstract fun bind(plan: Plan, clickListener: (Plan, Int) -> Unit)
 }
 
 class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : CommonHolder(inflater, parent, R.layout.card_dashboard_overview) {
 
     @SuppressLint("SetTextI18n")
-    override fun bind(plan: Plan, clickListener: (Plan) -> Unit) {
+    override fun bind(plan: Plan, clickListener: (Plan, Int) -> Unit) {
         itemView.currentBalanceValue.text = String.format("%d CZK", plan.currentBalance)
         itemView.monthlyPlusSaveFromTransactionsValue.text = String.format("%d CZK", plan.monthlySavedPerMonth)
         itemView.monthlyMinusPlansValue.text = String.format("%d CZK", plan.monthlyPlans)
@@ -79,9 +80,13 @@ class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : 
         if (plan.monthlySavedPerMonth - plan.monthlyPlans < 0) {
             itemView.freeFunds.setColor(R.color.profinit_red)
             itemView.freeFundsValue.setColor(R.color.profinit_red)
+            itemView.idea.visibility = View.VISIBLE
+            itemView.idea.setTint(android.R.color.holo_orange_light)
         } else {
             itemView.freeFunds.setColor(android.R.color.holo_green_light)
             itemView.freeFundsValue.setColor(android.R.color.holo_green_light)
+            itemView.idea.visibility = View.VISIBLE
+            itemView.idea.setTint(android.R.color.holo_green_light)
         }
 
         itemView.balanceSlider.clearOnChangeListeners()
@@ -94,9 +99,14 @@ class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : 
 
             override fun onStopTrackingTouch(slider: Slider) {
                 plan.currentBalance = slider.value.toInt()
-                clickListener(plan)
+                clickListener(plan, 0)
             }
         })
+
+
+        itemView.idea.setOnClickListener {
+            clickListener(plan, 666)
+        }
 
     }
 }
@@ -105,19 +115,19 @@ class PlanOverviewItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : 
 class PlanSeparatorItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : CommonHolder(inflater, parent, R.layout.card_dashboard_separator) {
 
     @SuppressLint("SetTextI18n")
-    override fun bind(plan: Plan, clickListener: (Plan) -> Unit) {
+    override fun bind(plan: Plan, clickListener: (Plan, Int) -> Unit) {
     }
 }
 
 class PlanDashboardItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) : CommonHolder(inflater, parent, R.layout.card_dashboard_plan) {
 
     @SuppressLint("SetTextI18n")
-    override fun bind(plan: Plan, clickListener: (Plan) -> Unit) {
+    override fun bind(plan: Plan, clickListener: (Plan, Int) -> Unit) {
 
         itemView.planTitle.text = plan.name
         itemView.planValue.text = String.format("Target: %s CZK", plan.amount.toString())
-        itemView.planActual.text = String.format("Actual: %s CZK", ((plan.amount * plan.percentages) / 100).toString())
-        itemView.planExpiration.text = String.format("Expiration: %s", plan.dateTo.toString())
+        itemView.planActual.text = String.format("Actual: %s CZK", ((plan.amount * (plan.percentages ?:0)) / 100).toString())
+        itemView.planExpiration.text = String.format("Expiration: %s", plan.dateTo)
 
         val color = when (plan.percentages) {
             in 0..50 -> R.color.profinit_red
@@ -125,16 +135,15 @@ class PlanDashboardItemViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
             in 75..100 -> android.R.color.holo_green_light
             else -> android.R.color.holo_green_light
         }
-        itemView.indicator.setTint(if (plan.isOk) android.R.color.holo_green_light else R.color.profinit_red)
-        itemView.planProgress.progress = plan.percentages
+        itemView.indicator.setTint(if (plan.isOk == true) android.R.color.holo_green_light else R.color.profinit_red)
+        itemView.planProgress.progress = plan.percentages ?: 0
         itemView.planProgress.setTint(color)
 
-
         itemView.enableDisablePlan.setOnClickListener {
-            clickListener(plan)
+            clickListener(plan, 0)
         }
 
-        if (plan.enabled) {
+        if (plan.enabled != false) {
             itemView.enableDisablePlan.setDrawable(R.drawable.ic_turned_on)
         } else {
             itemView.enableDisablePlan.setDrawable(R.drawable.ic_turned_off)
@@ -154,6 +163,10 @@ fun ProgressBar.setTint(@ColorRes colorRes: Int) {
 
 fun AppCompatImageButton.setDrawable(@DrawableRes colorDrawable: Int) {
     this.setImageDrawable(ContextCompat.getDrawable(this.context, colorDrawable))
+}
+
+fun AppCompatImageButton.setTint(@ColorRes colorRes: Int) {
+    this.imageTintList = ColorStateList.valueOf(ContextCompat.getColor(this.context, colorRes))
 }
 
 fun AppCompatTextView.setColor(@ColorRes colorRes: Int) {

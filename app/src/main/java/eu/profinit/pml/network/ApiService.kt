@@ -1,9 +1,6 @@
 package eu.profinit.pml.network
 
-import eu.profinit.pml.data.common.EnableDisable
-import eu.profinit.pml.data.common.Plan
-import eu.profinit.pml.data.common.PlanModel
-import eu.profinit.pml.data.common.Transaction
+import eu.profinit.pml.data.common.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -40,6 +37,6 @@ abstract interface ApiService {
 
     @GET("transactions")
     suspend fun getTransactions(
-        @Query("clientId") deviceId: String?
-    ): Collection<Transaction>
+        @Query("clientId") clientId: String?
+    ): TransactionModel?
 }

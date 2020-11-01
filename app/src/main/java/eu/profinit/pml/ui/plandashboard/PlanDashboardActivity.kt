@@ -41,7 +41,7 @@ class PlanDashboardActivity : AppCompatActivity() {
 
     private fun setupBindings() {
         binding.swipeRefreshMyPlans.setOnRefreshListener { planDashboardViewModel.loadMyPlans() }
-        binding.myPlansRecycler.adapter = PlanDashboardAdapter { processPlan(it) }
+        binding.myPlansRecycler.adapter = PlanDashboardAdapter(clickListener = ::processPlan)
         binding.myPlansRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         planDashboardViewModel.myResult.observe(this, {
@@ -73,12 +73,17 @@ class PlanDashboardActivity : AppCompatActivity() {
         })
     }
 
-    private fun processPlan(plan: Plan) {
+    private fun processPlan(plan: Plan, type: Int) {
+        if (type == 666) {
+            navigateToTransactionOptimization()
+            return
+        }
+
         if (plan.id == -100) {
             planDashboardViewModel.currentBalance.postValue(plan.currentBalance)
         } else {
             plan.id?.let {
-                if (!plan.enabled) {
+                if (plan.enabled == false) {
                     planDashboardViewModel.enablePlan(it)
                 } else {
                     planDashboardViewModel.disablePlan(it)

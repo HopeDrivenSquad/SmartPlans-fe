@@ -26,4 +26,10 @@
     <string name="new_plan_expiration_date_label">Plan expiration date:</string>
     <string name="new_plan_amount_label">Plan amount:</string>
     <string name="new_plan_name_label">Plan name:</string>
+
+    <!-- String related to new plan -->
+    <string name="transactions">Transaction optimizing</string>
+    <string name="transaction_optimizing_prefix">You can save</string>
+    <string name="transaction_optimizing_suffix">on these transactions</string>
+
 </resources>

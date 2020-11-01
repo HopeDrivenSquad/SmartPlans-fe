@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/new_plan"
+            android:text="@string/transactions"
             android:textAlignment="center"
             android:gravity="center"
             style="@style/Theme.ProfinitMoneyLearning.TitleOnBackground" />
@@ -36,89 +36,104 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sc_background"
-        android:padding="8dp">
+        android:background="@drawable/sc_background">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardSummary"
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/planName"
-            android:layout_width="150dp"
-            android:layout_height="44dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
 
-            android:gravity="center|start"
-            android:textSize="16sp"
-            android:text="@string/new_plan_name_label"/>
+                android:layout_margin="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="10dp"
+                app:cardPreventCornerOverlap="false"
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/planNameValue"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
-            android:inputType="text"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/planName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/planName"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/planAmount"
-            android:layout_width="150dp"
-            android:layout_height="44dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planNameValue"
+                tools:context=".ui.plandashboard.PlanDashboardActivity"
+                tools:theme="@style/Theme.ProfinitMoneyLearning.App"
+                >
 
-            android:gravity="center|start"
-            android:textSize="16sp"
-            android:text="@string/new_plan_amount_label"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/sc_background"
+                    android:padding="8dp"
+                    app:layout_constraintHorizontal_chainStyle="packed">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/planAmountValue"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/allSavedPrefix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:gravity="center"
+                        android:text="@string/transaction_optimizing_prefix"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintEnd_toStartOf="@id/allSavedValue"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            android:inputType="number"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/planAmount"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/planAmount"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/allSavedValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/holo_green_light"
+                        android:textStyle="bold"
+                        android:layout_marginStart="4dp"
+                        app:layout_constraintEnd_toStartOf="@id/allSavedSuffix"
+                        app:layout_constraintStart_toEndOf="@id/allSavedPrefix"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="100CZK" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/planExpiration"
-            android:layout_width="150dp"
-            android:layout_height="44dp"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/allSavedSuffix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:gravity="center"
+                        android:text="@string/transaction_optimizing_suffix"
+                        android:textSize="16sp"
+                        android:layout_marginStart="4dp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/allSavedValue"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/planAmount"
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            android:gravity="center|start"
-            android:textSize="16sp"
-            android:text="@string/new_plan_expiration_date_label"
-            />
+            </androidx.cardview.widget.CardView>
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/planExpirationValue"
-            android:layout_width="0dp"
-            android:layout_height="44dp"
+            <View
+                android:id="@+id/separator"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:background="@color/disabled"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-            android:inputType="date"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/planExpiration"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/planExpiration"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/categoriesList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/createButton"
-            android:layout_width="0dp"
-            android:layout_height="52dp"
-            app:layout_constraintStart_toStartOf="@id/planAmount"
-            app:layout_constraintEnd_toEndOf="@id/planAmountValue"
-            android:background="@color/profinit_red"
-            android:text="@string/new_plan_create_btn_title"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/cardSummary"/>
 
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

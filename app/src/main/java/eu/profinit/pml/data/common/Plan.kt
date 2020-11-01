@@ -9,15 +9,12 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class Plan(val id: Int? = -99) : Parcelable {
     var name: String = ""
-    @Transient
-    var percentages: Int = 0
+    var percentages: Int? = 0
     var amount: Int = 0
     var dateTo: String = ""
 
-    @Transient
-    var isOk: Boolean = false
-    @Transient
-    var enabled: Boolean = true
+    var isOk: Boolean? = false
+    var enabled: Boolean? = true
 
     @Transient
     var currentBalance: Int = 0
@@ -32,4 +29,4 @@ data class Plan(val id: Int? = -99) : Parcelable {
 @Parcelize
 data class PlanModel(val summary: Summary, val plans: @RawValue Collection<Plan>): Parcelable
 @Parcelize
-data class Summary(val savedAmountPerMonth: Int, val planAmountPerMonth: Int, val totalAmountPerMonth: Int, val emergencyBalance: Int): Parcelable
+data class Summary(val savedAmountPerMonth: Int?, val planAmountPerMonth: Int?, val totalAmountPerMonth: Int?, val emergencyBalance: Int?): Parcelable
